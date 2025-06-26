@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Launch Hyperbeam Session</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 30px; text-align: center; }
+    button { font-size: 18px; padding: 10px 20px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Launch a Session</h1>
+  <button id="launch">Launch Session</button>
+
+  <script>
+    document.getElementById("launch").addEventListener("click", async () => {
+      try {
+        const response = await fetch("/api/hyperbeam"); 
+        const data = await response.json();
+        if (data.url) {
+          window.open(data.url, "_blank");
+        } else {
+          alert(data.error || "Something went wrong");
+        }
+      } catch (error) {
+        alert("Error launching the session.");
+      }
+    });
+  </script>
+</body>
+</html>
