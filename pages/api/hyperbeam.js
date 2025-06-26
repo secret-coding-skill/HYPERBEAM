@@ -21,13 +21,13 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: data.error || "Error creating session" });
     }
 
-    // ✅ Do NOT send admin_token
     if (data.embed_url && data.session_id) {
-      res.status(200).json({ url: data.embed_url, session_id: data.session_id });
+      // ✅ We only send the safe embed_url + session_id
+      return res.status(200).json({ url: data.embed_url, session_id: data.session_id });
     } else {
-      res.status(500).json({ error: "Missing required fields" });
+      return res.status(500).json({ error: "Missing required fields" });
     }
   } catch (err) {
-    res.status(500).json({ error: "Server error: " + err.message });
+    return res.status(500).json({ error: "Server error: " + err.message });
   }
 }
